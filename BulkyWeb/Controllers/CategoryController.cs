@@ -20,7 +20,8 @@ namespace BulkyWeb.Controllers
             return View(objCategoryList);
         }
 
-        public IActionResult Create() {
+        public IActionResult Create()
+        {
             return View();
         }
 
@@ -37,10 +38,74 @@ namespace BulkyWeb.Controllers
                 _db.categories.Add(obj);
                 _db.SaveChanges();
 
+                TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
 
             return View(obj);
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id <= 0)
+            {
+                return NotFound();
+            }
+
+            Category? category = _db.categories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Category obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.categories.Update(obj);
+                _db.SaveChanges();
+
+                TempData["success"] = "Category edited successfully";
+                return RedirectToAction("Index");
+            }
+
+            return View(obj);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id <= 0)
+            {
+                return NotFound();
+            }
+
+            Category? category = _db.categories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+            Category? category = _db.categories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            _db.categories.Remove(category);
+            _db.SaveChanges();
+
+            TempData["success"] = "Category deteled successfully";
+            return RedirectToAction("Index");
         }
     }
 }
