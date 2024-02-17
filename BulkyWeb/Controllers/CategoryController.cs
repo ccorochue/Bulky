@@ -19,5 +19,28 @@ namespace BulkyWeb.Controllers
 
             return View(objCategoryList);
         }
+
+        public IActionResult Create() {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Category obj)
+        {
+            if (obj.name == obj.display_order.ToString())
+            {
+                ModelState.AddModelError("name", "The display order can't exactly match the name");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _db.categories.Add(obj);
+                _db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            return View(obj);
+        }
     }
 }
