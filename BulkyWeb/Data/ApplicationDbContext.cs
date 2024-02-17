@@ -15,9 +15,9 @@ namespace BulkyWeb.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category { id = 1, name = "Action", display_order = 1 },
-                new Category { id = 2, name = "SciFi", display_order = 2 },
-                new Category { id = 3, name = "History", display_order = 3 }
+                new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
+                new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
+                new Category { Id = 3, Name = "History", DisplayOrder = 3 }
                 );
         }
     }
