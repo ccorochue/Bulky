@@ -24,9 +24,9 @@ namespace BulkyWebRazor_Temp.Pages.Categories
             }
         }
 
-        public IActionResult OnPost(int? id)
+        public IActionResult OnPost()
         {
-            Category = _db.categories.Find(id);
+            Category = _db.categories.Find(Category.Id);
             if (Category != null)
             {
                 _db.categories.Remove(Category);
