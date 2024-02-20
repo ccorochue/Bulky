@@ -1,5 +1,4 @@
-﻿using Bulky.DataAcess.Data;
-using Bulky.DataAcess.Repository.IRepository;
+﻿using Bulky.DataAcess.Repository.IRepository;
 using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
 

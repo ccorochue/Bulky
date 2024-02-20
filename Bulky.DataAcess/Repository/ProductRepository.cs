@@ -1,11 +1,6 @@
 ﻿using Bulky.DataAcess.Data;
 using Bulky.DataAcess.Repository.IRepository;
 using Bulky.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bulky.DataAcess.Repository
 {
@@ -20,7 +15,7 @@ namespace Bulky.DataAcess.Repository
 
         public void Update(Product obj)
         {
-            
+            _db.products.Update(obj);
         }
     }
 }

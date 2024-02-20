@@ -41,7 +41,8 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return View(product);
         }
 
-        public IActionResult Edit(int? id) {
+        public IActionResult Edit(int? id)
+        {
             if (id == null || id < 0)
             {
                 return NotFound();
@@ -68,7 +69,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View();
+            return View(product);
         }
 
         public IActionResult Delete(int? id)
@@ -88,7 +89,8 @@ namespace BulkyWeb.Areas.Admin.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id) {
+        public IActionResult DeletePOST(int? id)
+        {
             Product? product = _unitOfWork.Product.Get(i => i.Id == id);
             if (product == null)
             {

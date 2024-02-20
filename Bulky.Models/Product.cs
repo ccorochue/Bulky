@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bulky.Models
 {
@@ -20,19 +16,19 @@ namespace Bulky.Models
         [Required]
         public string? Author { get; set; }
         [Required]
-        [Display(Name = "List price")]
+        [DisplayName("List price")]
         [Range(1, 1000, ErrorMessage = "This price must be between 1 and 1000")]
         public double? ListPrice { get; set; }
         [Required]
-        [Display(Name = "Price for 1-50")]
+        [DisplayName("Price for 1-50")]
         [Range(1, 1000, ErrorMessage = "This price must be between 1 and 1000")]
         public double? Price { get; set; }
         [Required]
-        [Display(Name = "Price for 50+")]
+        [DisplayName("Price for 50+")]
         [Range(1, 1000, ErrorMessage = "This price must be between 1 and 1000")]
         public double? Price50 { get; set; }
         [Required]
-        [Display(Name = "Price for 100+")]
+        [DisplayName("Price for 100+")]
         [Range(1, 1000, ErrorMessage = "This price must be between 1 and 1000")]
         public double? Price100 { get; set; }
 
