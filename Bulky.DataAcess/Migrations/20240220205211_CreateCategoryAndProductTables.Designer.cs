@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bulky.DataAcess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240220040643_AddProductToDbAndSeedTable")]
-    partial class AddProductToDbAndSeedTable
+    [Migration("20240220205211_CreateCategoryAndProductTables")]
+    partial class CreateCategoryAndProductTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,9 @@ namespace Bulky.DataAcess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -96,6 +99,8 @@ namespace Bulky.DataAcess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("products");
 
                     b.HasData(
@@ -103,6 +108,7 @@ namespace Bulky.DataAcess.Migrations
                         {
                             Id = 1,
                             Author = "Author sample",
+                            CategoryId = 1,
                             Description = "Description sample",
                             ISBN = "123456789",
                             ListPrice = 20.0,
@@ -111,6 +117,17 @@ namespace Bulky.DataAcess.Migrations
                             Price50 = 18.0,
                             Title = "Title sample"
                         });
+                });
+
+            modelBuilder.Entity("Bulky.Models.Product", b =>
+                {
+                    b.HasOne("Bulky.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

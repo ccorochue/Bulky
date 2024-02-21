@@ -30,7 +30,9 @@ namespace Bulky.DataAcess.Data
                     ListPrice = 20,
                     Price = 20,
                     Price50 = 18,
-                    Price100 = 15
+                    Price100 = 15,
+                    CategoryId = 1,
+                    ImageUrl = ""
                 }
                 );
         }
