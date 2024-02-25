@@ -30,20 +30,23 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="customer" asp-controller="home" asp-action="privacy">Privacy</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Content management
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" asp-area="admin" asp-controller="category" asp-action="index">Category</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="admin" asp-controller="product" asp-action="index">Product</a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                            </ul>
-                        </li>
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Content management
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="admin" asp-controller="category" asp-action="index">Category</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="admin" asp-controller="product" asp-action="index">Product</a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
