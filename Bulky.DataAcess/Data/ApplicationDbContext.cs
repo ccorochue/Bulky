@@ -15,14 +15,20 @@ namespace Bulky.DataAcess.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Company> Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Category Sample", DisplayOrder = 1 }
-                );
+                new Category 
+                { 
+                    Id = 1,
+                    Name = "Category Sample",
+                    DisplayOrder = 1 
+                }
+            );
 
             modelBuilder.Entity<Product>().HasData(
                 new Product
@@ -39,7 +45,20 @@ namespace Bulky.DataAcess.Data
                     CategoryId = 1,
                     ImageUrl = ""
                 }
-                );
+            );
+
+            modelBuilder.Entity<Company>().HasData(
+                new Company
+                {
+                    Id = 1,
+                    Name = "Sample company",
+                    StreetAddress = "",
+                    City = "",
+                    State = "",
+                    PostalCode = "",
+                    PhoneNumber = ""
+                }
+            );
         }
     }
 }
