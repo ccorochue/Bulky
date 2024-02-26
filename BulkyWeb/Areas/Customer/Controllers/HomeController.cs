@@ -41,12 +41,22 @@ namespace BulkyWeb.Areas.Customer.Controllers
         [Authorize]
         public IActionResult Detail(ShoppingCart shoppingCart)
         {
-            shoppingCart.Id = 0;
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             shoppingCart.ApplicationUserId = userId;
 
-            _unitOfWork.ShoppingCart.Add(shoppingCart);
+            ShoppingCart existShoppingCart = _unitOfWork.ShoppingCart.Get(i => i.ApplicationUserId == userId && i.ProductId == shoppingCart.ProductId);
+
+            if (existShoppingCart != null)
+            {
+                existShoppingCart.Count += shoppingCart.Count;
+            }
+            else
+            {
+                shoppingCart.Id = 0;
+                _unitOfWork.ShoppingCart.Add(shoppingCart);
+            }
+
             _unitOfWork.Save();
 
             return RedirectToAction("index");
