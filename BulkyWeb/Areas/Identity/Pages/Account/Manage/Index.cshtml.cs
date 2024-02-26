@@ -4,12 +4,18 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Bulky.DataAcess.Repository.IRepository;
 using Bulky.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BulkyWeb.Areas.Identity.Pages.Account.Manage
 {
@@ -17,13 +23,16 @@ namespace BulkyWeb.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IUnitOfWork _unitOfWork;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -64,6 +73,10 @@ namespace BulkyWeb.Areas.Identity.Pages.Account.Manage
             public string State { get; set; }
             public string City { get; set; }
             public string PostalCode { get; set; }
+            public int? CompanyId { get; set; }
+            [ForeignKey("CompanyId")]
+            [ValidateNever]
+            public IEnumerable<SelectListItem> CompanyList { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -80,7 +93,13 @@ namespace BulkyWeb.Areas.Identity.Pages.Account.Manage
                 StreetAddress = user.StreetAddress,
                 State = user.State,
                 City = user.City,
-                PostalCode = user.PostalCode
+                PostalCode = user.PostalCode, 
+                CompanyId = user.CompanyId,
+                CompanyList = _unitOfWork.Company.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                })
             };
         }
 
@@ -126,6 +145,7 @@ namespace BulkyWeb.Areas.Identity.Pages.Account.Manage
             user.State = Input.State;
             user.City = Input.City;
             user.PostalCode = Input.PostalCode;
+            user.CompanyId = Input.CompanyId;
 
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
