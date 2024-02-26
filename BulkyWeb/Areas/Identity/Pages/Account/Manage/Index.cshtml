@@ -45,11 +45,14 @@
                 <label asp-for="Input.PostalCode" class="form-label">Postal code</label>
                 <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
             </div>
-            <div class="form-floating mb-3 col-md-6">
-                <select asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" class="form-select">
-                    <option disabled selected>Select a company</option>
-                </select>
-            </div>
+            @if (User.IsInRole("Company"))
+            {
+                <div class="form-floating mb-3 col-md-6">
+                    <select asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" class="form-select">
+                        <option disabled selected>Select a company</option>
+                    </select>
+                </div>
+            }
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
     </div>

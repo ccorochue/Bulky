@@ -112,7 +112,7 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
             public string Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
-            public string Company { get; set; }
+            public int Company { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> CompanyList { get; set; }
 
@@ -171,7 +171,11 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
                 user.State = Input.State;
                 user.PostalCode = Input.PostalCode;
                 user.PhoneNumber = Input.PhoneNumber;
-                user.CompanyId = int.Parse(Input.Company);
+
+                if (Input.Role == SD.Role_Company)
+                {
+                    user.CompanyId = Input.Company;
+                }
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
