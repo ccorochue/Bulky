@@ -50,11 +50,13 @@ namespace BulkyWeb.Areas.Customer.Controllers
             if (existShoppingCart != null)
             {
                 existShoppingCart.Count += shoppingCart.Count;
+                TempData["success"] = "Product updated successfully on the shopping cart";
             }
             else
             {
                 shoppingCart.Id = 0;
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
+                TempData["success"] = "Product added successfully to the shopping cart";
             }
 
             _unitOfWork.Save();
