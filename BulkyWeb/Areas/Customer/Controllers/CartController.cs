@@ -84,6 +84,20 @@ namespace BulkyWeb.Areas.Customer.Controllers
             return RedirectToAction("index");
         }
 
+        public IActionResult Summary()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            ShoppingCartVM shoppingCartVM = new()
+            {
+                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(i => i.ApplicationUserId == userId, includeProperties: "Product")
+            };
+            shoppingCartVM.OrderTotal = shoppingCartVM.ShoppingCartList.Sum(i => i.Price * i.Count);
+
+            return View(shoppingCartVM);
+        }
+
         private double? ProductPrice(int productId, int quantity)
         {
             Product product = _unitOfWork.Product.Get(i => i.Id == productId);
