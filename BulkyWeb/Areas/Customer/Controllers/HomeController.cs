@@ -50,11 +50,13 @@ namespace BulkyWeb.Areas.Customer.Controllers
             if (existShoppingCart != null)
             {
                 existShoppingCart.Count += shoppingCart.Count;
+                existShoppingCart.Price = ProductPrice(shoppingCart.ProductId, existShoppingCart.Count);
                 TempData["success"] = "Product updated successfully on the shopping cart";
             }
             else
             {
                 shoppingCart.Id = 0;
+                shoppingCart.Price = ProductPrice(shoppingCart.ProductId, shoppingCart.Count);
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
                 TempData["success"] = "Product added successfully to the shopping cart";
             }
@@ -62,6 +64,24 @@ namespace BulkyWeb.Areas.Customer.Controllers
             _unitOfWork.Save();
 
             return RedirectToAction("index");
+        }
+
+        private double? ProductPrice(int productId, int quantity)
+        {
+            Product product = _unitOfWork.Product.Get(i => i.Id == productId);
+
+            if (quantity <= 50)
+            {
+                return product.Price;
+            }
+            else if (quantity <= 100)
+            {
+                return product.Price50;
+            }
+            else
+            {
+                return product.Price100;
+            }
         }
 
         public IActionResult Privacy()
