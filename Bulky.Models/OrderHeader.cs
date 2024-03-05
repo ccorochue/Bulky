@@ -13,7 +13,7 @@ namespace Bulky.Models
         public ApplicationUser ApplicationUser { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime ShippingDate { get; set; }
-        public double OrderTotal { get; set; }
+        public double? OrderTotal { get; set; }
         public string? OrderStatus { get; set; }
         public string? PaymentStatus { get; set; }
         public string? TrackingNumber { get; set; }

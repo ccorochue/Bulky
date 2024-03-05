@@ -25,9 +25,10 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
             ShoppingCartVM shoppingCartVM = new()
             {
-                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(i => i.ApplicationUserId == userId, includeProperties: "Product")
+                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(i => i.ApplicationUserId == userId, includeProperties: "Product"),
+                OrderHeader = new()
             };
-            shoppingCartVM.OrderTotal = shoppingCartVM.ShoppingCartList.Sum(i => i.Price * i.Count);
+            shoppingCartVM.OrderHeader.OrderTotal = shoppingCartVM.ShoppingCartList.Sum(i => i.Price * i.Count);
 
             return View(shoppingCartVM);
         }
@@ -91,9 +92,10 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
             ShoppingCartVM shoppingCartVM = new()
             {
-                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(i => i.ApplicationUserId == userId, includeProperties: "Product")
+                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(i => i.ApplicationUserId == userId, includeProperties: "Product"),
+                OrderHeader = new()
             };
-            shoppingCartVM.OrderTotal = shoppingCartVM.ShoppingCartList.Sum(i => i.Price * i.Count);
+            shoppingCartVM.OrderHeader.OrderTotal = shoppingCartVM.ShoppingCartList.Sum(i => i.Price * i.Count);
 
             return View(shoppingCartVM);
         }
