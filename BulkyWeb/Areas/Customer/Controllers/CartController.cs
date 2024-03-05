@@ -95,6 +95,16 @@ namespace BulkyWeb.Areas.Customer.Controllers
                 ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(i => i.ApplicationUserId == userId, includeProperties: "Product"),
                 OrderHeader = new()
             };
+
+            shoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(i => i.Id == userId);
+
+            shoppingCartVM.OrderHeader.Name = shoppingCartVM.OrderHeader.ApplicationUser.Name;
+            shoppingCartVM.OrderHeader.PhoneNumber = shoppingCartVM.OrderHeader.ApplicationUser.PhoneNumber;
+            shoppingCartVM.OrderHeader.StreetAddress = shoppingCartVM.OrderHeader.ApplicationUser.StreetAddress;
+            shoppingCartVM.OrderHeader.City = shoppingCartVM.OrderHeader.ApplicationUser.City;
+            shoppingCartVM.OrderHeader.State = shoppingCartVM.OrderHeader.ApplicationUser.State;
+            shoppingCartVM.OrderHeader.PostalCode = shoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
+
             shoppingCartVM.OrderHeader.OrderTotal = shoppingCartVM.ShoppingCartList.Sum(i => i.Price * i.Count);
 
             return View(shoppingCartVM);
